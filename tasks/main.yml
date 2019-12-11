@@ -1,0 +1,35 @@
+---
+# tasks file for ssh
+
+- name: set OS related variables
+  include_vars: '{{ item }}'
+  with_first_found:
+    - '{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml'
+    - '{{ ansible_distribution }}.yml'
+    - '{{ ansible_os_family }}.yml'
+    - defaults.yml
+
+- name: install sshd & Co
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items: "{{ ssh_packages }}"
+  when: ssh_packages is defined 
+
+- name: enable sshd
+  service:
+    name: '{{ ssh_service }}'
+    state: started
+    enabled: yes
+
+- name: set up sshd_config_linesinfile
+  lineinfile:
+    dest: '/etc/ssh/sshd_config'
+    regexp: '{{ item.regexp | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    line: '{{ item.line | default(omit) }}'
+    backrefs: '{{ item.backrefs | default(omit) }}'
+  with_items: '{{ ssh.sshd_config.linesinfile | default([]) }}'
+  when: ssh is defined
+  notify:
+    - reload sshd

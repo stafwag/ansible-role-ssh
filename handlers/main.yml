@@ -1,0 +1,7 @@
+---
+# handlers file for ssh
+
+- name: reload sshd
+  service:
+    name: '{{ ssh_service }}'
+    state: reloaded

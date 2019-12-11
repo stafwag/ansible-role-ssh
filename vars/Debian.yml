@@ -1,0 +1,6 @@
+---
+# defaults file for ssh
+
+ssh_packages:
+  - openssh-server
+ssh_service: sshd
