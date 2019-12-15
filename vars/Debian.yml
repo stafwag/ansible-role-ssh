@@ -3,4 +3,4 @@
 
 ssh_packages:
   - openssh-server
-ssh_service: sshd
+ssh_service: ssh

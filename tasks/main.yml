@@ -2,18 +2,24 @@
 # tasks file for ssh
 
 - name: set OS related variables
-  include_vars: '{{ item }}'
+  include_vars: '{{ os_vars }}'
   with_first_found:
     - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
     - '{{ ansible_distribution }}.yml'
     - '{{ ansible_os_family }}.yml'
     - defaults.yml
+  loop_control:
+    loop_var: os_vars
 
-- name: install sshd & Co
-  package:
-    name: '{{ item }}'
-    state: present
-  with_items: "{{ ssh_packages }}"
+- name: install ssh packages
+  include_tasks: '{{ install_ssh }}'
+  with_first_found:
+    - 'install_ssh/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
+    - 'install_ssh/{{ ansible_distribution }}.yml'
+    - 'install_ssh/{{ ansible_os_family }}.yml'
+    - install_ssh/defaults.yml
+  loop_control:
+    loop_var: install_ssh
   when: ssh_packages is defined
 
 - name: enable sshd
