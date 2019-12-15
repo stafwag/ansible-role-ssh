@@ -1,0 +1,5 @@
+- name: install ssh packages
+  include_tasks: install_pkg_with_yum.yml
+  with_items: '{{ ssh_packages }}'
+  loop_control:
+    loop_var: pkg

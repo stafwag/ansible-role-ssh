@@ -1,0 +1,8 @@
+- name: install sshd & Co
+  package:
+    name: '{{ pkg }}'
+    state: present
+  with_items: "{{ ssh_packages }}"
+  when: ssh_packages is defined
+  loop_control:
+    loop_var: pkg
