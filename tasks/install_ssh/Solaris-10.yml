@@ -1,0 +1,3 @@
+- name: Solaris 10 ssh
+  debug:
+    msg: Not supported yet
