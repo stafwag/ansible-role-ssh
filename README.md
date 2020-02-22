@@ -37,14 +37,18 @@ None
           - name:   set MaxAuthTries
             regex:  '^#*MaxAuthTries'
             line:   'MaxAuthTries 12'
-          - name:   remove password authentication
+          - name:    disable password authentication
             regexp: '^#*PasswordAuthentication'
             line:   'PasswordAuthentication no'
-          - name:   remove root acesss
+          - name:   remove password authentication
+            regexp: '(?i)^\s*PasswordAuthentication\s*yes.*'
+            state:  absent
+          - name:   disable root acesss
             regexp: '^#*PermitRootLogin'
             line:   'PermitRootLogin no'
-  roles:
-    - stafwag.ssh
+          - name:   remove root acesss
+            regexp: '(?i)^\s*PermitRootLogin\s*yes'
+            state:  absent
 ```
 
 
