@@ -7,6 +7,7 @@
     - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
     - '{{ ansible_distribution }}.yml'
     - '{{ ansible_os_family }}.yml'
+    - '{{ ansible_os_family | replace ("/","_") | replace(" ","_") }}.yml'
     - defaults.yml
   loop_control:
     loop_var: os_vars
@@ -17,6 +18,7 @@
     - 'install_ssh/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
     - 'install_ssh/{{ ansible_distribution }}.yml'
     - 'install_ssh/{{ ansible_os_family }}.yml'
+    - 'install_ssh/{{ ansible_os_family | replace ("/","_") | replace(" ","_") }}.yml'
     - install_ssh/defaults.yml
   loop_control:
     loop_var: install_ssh
