@@ -30,25 +30,27 @@ None
 - name: configure sshd
   hosts: all
   become: true
-  vars:
-    ssh:
-        sshd_config:
-          linesinfile:
-          - name:   set MaxAuthTries
-            regex:  '^#*MaxAuthTries'
-            line:   'MaxAuthTries 12'
-          - name:    disable password authentication
-            regexp: '^#*PasswordAuthentication'
-            line:   'PasswordAuthentication no'
-          - name:   remove password authentication
-            regexp: '(?i)^\s*PasswordAuthentication\s*yes.*'
-            state:  absent
-          - name:   disable root acesss
-            regexp: '^#*PermitRootLogin'
-            line:   'PermitRootLogin no'
-          - name:   remove root acesss
-            regexp: '(?i)^\s*PermitRootLogin\s*yes'
-            state:  absent
+  roles:
+    - role: stafwag.ssh
+      vars:
+        ssh:
+          sshd_config:
+            linesinfile:
+            - name:   set MaxAuthTries
+              regex:  '^#*MaxAuthTries'
+              line:   'MaxAuthTries 12'
+            - name:    disable password authentication
+              regexp: '^#*PasswordAuthentication'
+              line:   'PasswordAuthentication no'
+            - name:   remove password authentication
+              regexp: '(?i)^\s*PasswordAuthentication\s*yes.*'
+              state:  absent
+            - name:   disable root acesss
+              regexp: '^#*PermitRootLogin'
+              line:   'PermitRootLogin no'
+            - name:   remove root acesss
+              regexp: '(?i)^\s*PermitRootLogin\s*yes'
+              state:  absent
 ```
 
 
