@@ -1,9 +1,10 @@
-- name: verify if '{{ pkg }}' package is installed
-  command: rpm -q '{{ pkg }}'
+---
+- name: Verify the package is installed
+  ansible.builtin.command: rpm -q "{{ pkg }}" # noqa command-instead-of-module
   register: pkg_installed
-  ignore_errors: True
-  changed_when: 'pkg_installed.rc != 0'
+  ignore_errors: true
+  changed_when: "pkg_installed.rc != 0"
 
-- name: install '{{ pkg }}'
-  command: yum install -y '{{ pkg }}'
-  when: 'pkg_installed.rc != 0'
+- name: Install the package
+  ansible.builtin.command: yum install -y "{{ pkg }}" # noqa command-instead-of-module no-changed-when
+  when: "pkg_installed.rc != 0"
