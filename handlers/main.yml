@@ -2,6 +2,6 @@
 # handlers file for ssh
 
 - name: Reload sshd
-  service:
+  ansible.builtin.service:
     name: "{{ ssh_service }}"
     state: reloaded
