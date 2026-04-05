@@ -2,9 +2,33 @@
 
 An ansible role to manage sshd/ssh
 
+## Installation
+
+### Ansible galaxy
+
+The role is available on [Ansible Galaxy](https://galaxy.ansible.com/stafwag/ssh).
+
+To install the role from Ansible Galaxy execute the command below.
+
+```bash
+ansible-galaxy install stafwag.ssh
+```
+
+### Source Code
+
+If you want to use the source code directly.
+
+Clone the role source code.
+
+```bash
+$ git clone https://github.com/stafwag/ansible-role-ssh/ stafwag.ssh
+```
+
+and put into the [role search path](https://docs.ansible.com/ansible/2.4/playbooks_reuse_roles.html#role-search-path)
+
 ## Requirements
 
-None
+Un!x system, ssh
 
 ## Role Variables
 
@@ -26,8 +50,9 @@ None
 
 ## Example Playbook
 
-```
-- name: configure sshd
+```yaml
+---
+- name: Configure sshd
   hosts: all
   become: true
   roles:
@@ -53,11 +78,12 @@ None
               state:  absent
 ```
 
-
 ## License
 
 MIT/BSD
 
 ## Author Information
 
-Created by Staf Wagemakers, email: staf@wagemakers.be, website: http://www.wagemakers.be.
+Created by Staf Wagemakers, Email: staf@wagemakers.be, Website: [https://www.wagemakers.be](https://www.wagemakers.be), My company: [https://mask27.dev](https://mask27.dev)
+
+***Have fun!***
