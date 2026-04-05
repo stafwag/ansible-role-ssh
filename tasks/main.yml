@@ -4,10 +4,10 @@
 - name: set OS related variables
   include_vars: '{{ os_vars }}'
   with_first_found:
-    - '{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
-    - '{{ ansible_distribution }}.yml'
-    - '{{ ansible_os_family }}.yml'
-    - '{{ ansible_os_family | replace ("/","_") | replace(" ","_") }}.yml'
+    - "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"
+    - "{{ ansible_facts['distribution']  }}.yml"
+    - "{{ ansible_facts['os_family'] }}.yml"
+    - "{{ ansible_facts['os_family'] | replace ('/','_') | replace(' ','_') }}.yml"
     - defaults.yml
   loop_control:
     loop_var: os_vars
@@ -15,10 +15,10 @@
 - name: install ssh packages
   include_tasks: '{{ install_ssh }}'
   with_first_found:
-    - 'install_ssh/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml'
-    - 'install_ssh/{{ ansible_distribution }}.yml'
-    - 'install_ssh/{{ ansible_os_family }}.yml'
-    - 'install_ssh/{{ ansible_os_family | replace ("/","_") | replace(" ","_") }}.yml'
+    - "install_ssh/{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"
+    - "install_ssh/{{ ansible_facts['distribution']  }}.yml"
+    - "install_ssh/{{ ansible_facts['os_family'] }}.yml"
+    - "install_ssh/{{ ansible_facts['os_family'] | replace ('/','_') | replace(' ','_') }}.yml"
     - install_ssh/defaults.yml
   loop_control:
     loop_var: install_ssh
