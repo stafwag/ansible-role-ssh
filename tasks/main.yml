@@ -1,43 +1,43 @@
 ---
 # tasks file for ssh
 
-- name: set OS related variables
-  include_vars: '{{ os_vars }}'
+- name: Set OS related variables
+  ansible.builtin.include_vars: "{{ os_vars }}"
   with_first_found:
     - "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"
-    - "{{ ansible_facts['distribution']  }}.yml"
+    - "{{ ansible_facts['distribution'] }}.yml"
     - "{{ ansible_facts['os_family'] }}.yml"
-    - "{{ ansible_facts['os_family'] | replace ('/','_') | replace(' ','_') }}.yml"
+    - "{{ ansible_facts['os_family'] | replace('/', '_') | replace(' ', '_') }}.yml"
     - defaults.yml
   loop_control:
     loop_var: os_vars
 
-- name: install ssh packages
-  include_tasks: '{{ install_ssh }}'
+- name: Install ssh packages
+  ansible.builtin.include_tasks: "{{ install_ssh }}"
   with_first_found:
     - "install_ssh/{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"
-    - "install_ssh/{{ ansible_facts['distribution']  }}.yml"
+    - "install_ssh/{{ ansible_facts['distribution'] }}.yml"
     - "install_ssh/{{ ansible_facts['os_family'] }}.yml"
-    - "install_ssh/{{ ansible_facts['os_family'] | replace ('/','_') | replace(' ','_') }}.yml"
+    - "install_ssh/{{ ansible_facts['os_family'] | replace('/', '_') | replace(' ', '_') }}.yml"
     - install_ssh/defaults.yml
   loop_control:
     loop_var: install_ssh
   when: ssh_packages is defined
 
-- name: enable sshd
-  service:
-    name: '{{ ssh_service }}'
+- name: Enable sshd
+  ansible.builtin.service:
+    name: "{{ ssh_service }}"
     state: started
-    enabled: yes
+    enabled: true
 
-- name: set up sshd_config_linesinfile
-  lineinfile:
-    dest: '/etc/ssh/sshd_config'
-    regexp: '{{ item.regexp | default(omit) }}'
-    state: '{{ item.state | default(omit) }}'
-    line: '{{ item.line | default(omit) }}'
-    backrefs: '{{ item.backrefs | default(omit) }}'
-  with_items: '{{ ssh.sshd_config.linesinfile | default([]) }}'
+- name: Set up sshd_config_linesinfile
+  ansible.builtin.lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "{{ item.regexp | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    line: "{{ item.line | default(omit) }}"
+    backrefs: "{{ item.backrefs | default(omit) }}"
+  with_items: "{{ ssh.sshd_config.linesinfile | default([]) }}"
   when: ssh is defined
   notify:
     - reload sshd
