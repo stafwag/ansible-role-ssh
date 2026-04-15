@@ -40,4 +40,4 @@
   with_items: "{{ ssh.sshd_config.linesinfile | default([]) }}"
   when: ssh is defined
   notify:
-    - reload sshd
+    - Reload sshd
